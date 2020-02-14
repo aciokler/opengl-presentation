@@ -1,0 +1,57 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "compile",
+            "command": "g++",
+            "args": [
+                "-c",
+                "-std=c++11",
+                "${workspaceFolder}\\*.c",
+                "${workspaceFolder}\\*.cpp",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "link",
+            "command": "g++",
+            "args": [
+                "-o",
+                "${workspaceFolder}\\opengl-presentation.exe",
+                "*.o",
+                "-lglfw3",
+                "-lopengl32",
+                "-lgdi32"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "dependsOn":["compile"]
+
+        },
+        {
+            "type": "shell",
+            "label": "cleanup",
+            "command": "DEL *.o",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn":["link"]
+        }
+    ]
+}
